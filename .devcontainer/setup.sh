@@ -8,13 +8,22 @@ composer install --no-interaction
 
 # Crear archivo de entorno
 echo "📝 Creando archivo .env..."
-cat > .env << 'ENVEOF'
+
+# Detectar la URL de Codespaces automáticamente
+if [ -n "$CODESPACE_NAME" ]; then
+    APP_URL="https://${CODESPACE_NAME}-8000.app.github.dev"
+    echo "🌐 Detectada URL de Codespaces: $APP_URL"
+else
+    APP_URL="http://localhost:8000"
+fi
+
+cat > .env << ENVEOF
 APP_NAME=GestorDeTareas
 APP_ENV=local
 APP_KEY=
 APP_DEBUG=true
 APP_TIMEZONE=UTC
-APP_URL=http://localhost:8000
+APP_URL=${APP_URL}
 
 APP_LOCALE=es
 APP_FALLBACK_LOCALE=es
