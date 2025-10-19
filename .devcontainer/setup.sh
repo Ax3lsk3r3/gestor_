@@ -7,9 +7,8 @@ echo "📦 Instalando dependencias de PHP..."
 composer install --no-interaction
 
 # Crear archivo de entorno
-if [ ! -f .env ]; then
-    echo "📝 Creando archivo .env..."
-    cat > .env << 'ENVEOF'
+echo "📝 Creando archivo .env..."
+cat > .env << 'ENVEOF'
 APP_NAME=GestorDeTareas
 APP_ENV=local
 APP_KEY=
@@ -58,17 +57,15 @@ MAIL_FROM_NAME=GestorDeTareas
 
 VITE_APP_NAME=GestorDeTareas
 ENVEOF
-fi
 
 # Generar clave de aplicación
 echo "🔑 Generando clave de aplicación..."
 php artisan key:generate --no-interaction
 
-# Crear base de datos SQLite si no existe
-if [ ! -f database/database.sqlite ]; then
-    echo "💾 Creando base de datos SQLite..."
-    touch database/database.sqlite
-fi
+# Crear base de datos SQLite
+echo "💾 Creando base de datos SQLite..."
+touch database/database.sqlite
+chmod 664 database/database.sqlite
 
 # Ejecutar migraciones
 echo "🗄️ Ejecutando migraciones..."
@@ -82,17 +79,32 @@ npm install
 echo "🎨 Compilando assets..."
 npm run build
 
+# Configurar permisos
+echo "🔐 Configurando permisos..."
+chmod -R 775 storage bootstrap/cache
+
 # Limpiar caché
 echo "🧹 Limpiando caché..."
 php artisan config:clear
 php artisan cache:clear
 php artisan view:clear
 
+echo ""
 echo "✅ ¡Entorno configurado correctamente!"
 echo ""
-echo "Para iniciar el servidor, ejecuta:"
-echo "  php artisan serve"
+echo "━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━"
+echo "📌 PASOS PARA INICIAR LA APLICACIÓN:"
+echo "━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━"
 echo ""
-echo "Para desarrollo con Vite, ejecuta en otra terminal:"
-echo "  npm run dev"
+echo "1️⃣  Ejecuta el servidor:"
+echo "    php artisan serve --host=0.0.0.0"
+echo ""
+echo "2️⃣  Ve a la pestaña PORTS (parte inferior)"
+echo ""
+echo "3️⃣  Busca el puerto 8000"
+echo ""
+echo "4️⃣  Haz clic en el ícono del GLOBO 🌐"
+echo ""
+echo "━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━"
+echo ""
 
