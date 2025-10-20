@@ -80,6 +80,10 @@ chmod 664 database/database.sqlite
 echo "🗄️ Ejecutando migraciones..."
 php artisan migrate --force
 
+# Ejecutar seeders para crear usuarios de prueba
+echo "🌱 Creando usuarios de prueba..."
+php artisan db:seed --force
+
 # Instalar dependencias de Node.js
 echo "📦 Instalando dependencias de Node.js..."
 npm install
